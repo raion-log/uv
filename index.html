@@ -116,19 +116,24 @@ UV.ready.then(({ courses, items }) => {
     const 안내 = (p.notes || []).length
       ? `<p class="fine">${(p.notes || []).join('<br>')}</p>` : '';
 
-    const el = document.createElement('div');
-    el.className = 'card block' + (p.download ? '' : ' pending');
+    // ★랜딩페이지(site)가 있으면 카드 전체가 그리로 가는 링크가 된다.
+    //   허브는 「프로그램 랜딩페이지들의 목록」이라 자세한 것은 그 랜딩이 맡는다.
+    //   랜딩이 아직 없는 프로그램만 여기서 바로 받게 둔다 — 랜딩이 생기면
+    //   products/*.js 에 site 한 줄을 적는 것만으로 링크 카드로 바뀐다.
+    const 링크카드 = !!p.site;
+    const el = document.createElement(링크카드 ? 'a' : 'div');
+    el.className = 'card block' + (링크카드 || p.download ? '' : ' pending');
+    if (링크카드) el.href = p.site;
+    // ★JSON 으로 담는다. 그냥 이어 붙이면 「유유스 1기」와 「유벤져스 1기」가 한 덩어리가 된다.
     el.dataset.courses = JSON.stringify(p.courses || []);
     el.innerHTML = `
+      ${링크카드 ? '<span class="go" aria-hidden="true">→</span>' : ''}
       <h2>${esc(p.name)}${p.edition ? `<span class="edition">${esc(p.edition)}</span>` : ''}</h2>
       <p class="en">${esc(p.en)}</p>
       <p>${esc(p.desc)}</p>
       <ul class="meta">${기수}${종류}${판}${배지}</ul>
-      ${받기}
-      ${자산}
-      ${안내}
-      ${p.kind === 'ext' ? 확장설치() : ''}
-      ${사양(p.spec)}`;
+      ${링크카드 ? '' : `${받기}${자산}${안내}`
+        + `${p.kind === 'ext' ? 확장설치() : ''}${사양(p.spec)}`}`;
     return el;
   };
 

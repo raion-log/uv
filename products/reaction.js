@@ -13,6 +13,11 @@ UV.add({
   // 이 프로그램을 받는 기수. courses.js 의 이름과 정확히 같아야 한다.
   courses: ['유유스 1기'],
 
+  // ★이 프로그램의 랜딩페이지. 허브 카드를 누르면 여기로 간다.
+  //   랜딩은 이 저장소(uv)가 아니라 **프로그램의 배포 저장소가 직접** 배포한다 —
+  //   프로그램마다 다른 기기에서 따로 갱신해도 부딪히지 않게.
+  site: 'https://raion-log.github.io/uv-global-reaction-editor-releases/',
+
   version: '1.2.3',
   file: 'UV-Global-Reaction-Editor_1.2.3_x64-setup.exe',
   size: '639MB (669,866,066 바이트)',
