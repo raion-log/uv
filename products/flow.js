@@ -16,4 +16,10 @@ UV.add({
   published: '2026-05-22',
   download: 'https://github.com/raion-log/raion-flow-pro-release/releases/download/v1.2.2/raion-flow-pro-v1.2.2.zip',
   releases: 'https://github.com/raion-log/raion-flow-pro-release/releases',
+
+  // 사용 가이드가 허브 저장소 안에 있다(guide/flow/). 안내문을 복사할 때 함께 따라간다.
+  notes: [
+    '사용 방법은 <a href="https://raion-log.github.io/uv/guide/flow/">사용 가이드</a>에서 '
+      + '사진과 함께 볼 수 있습니다.',
+  ],
 });

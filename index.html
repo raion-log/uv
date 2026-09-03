@@ -3,162 +3,245 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>UV — RAION 제품 허브</title>
+<title>UV 제품 허브 — 운영진용</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d1526'/%3E%3Ctext x='16' y='22' font-family='Georgia' font-size='14' font-weight='bold' fill='%237b93ff' text-anchor='middle'%3EUV%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="uv.css">
+<style>
+/* ★운영진용 화면. 수강생에게 보내는 페이지가 아니라 **링크를 골라 복사하는 도구**다.
+   공통 스타일은 uv.css 를 쓰고, 여기 필요한 것만 더한다
+   (uv.css 는 지금 다른 작업이 만지는 중이라 건드리지 않는다). */
+main{max-width:1040px}
+.tag{max-width:640px}
+
+/* 기수 줄 — 고른 기수와 개수를 크게 */
+.picked{
+  display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+  margin:34px 0 14px;padding-bottom:14px;border-bottom:1px solid #26314f;
+}
+.picked h2{
+  font-family:"Nanum Myeongjo",serif;font-size:1.5rem;margin:0;color:#fff;font-weight:800;
+}
+.picked .count{color:#8b96b4;font-size:.86rem}
+.picked .act{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+
+/* 프로그램 한 줄 — 카드보다 촘촘하게. 훑고 복사하는 화면이다. */
+.rows{display:grid;gap:10px}
+.row{
+  display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start;
+  border:1px solid #26314f;border-radius:12px;padding:15px 18px;
+  background:linear-gradient(180deg,rgba(21,29,50,.92),rgba(15,21,38,.92));
+}
+.row .name{font-weight:700;color:#fff;font-size:1.02rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.row .name .ed{
+  font-size:.76rem;font-weight:700;color:#b9c6ee;background:rgba(123,147,255,.16);
+  border:1px solid #3d4a76;border-radius:999px;padding:2px 11px;
+}
+.row .sub{color:#8b96b4;font-size:.82rem;margin-top:4px;display:flex;gap:10px;flex-wrap:wrap}
+.row .sub .warn{color:#d9a94e}
+.row .link{
+  margin-top:8px;font-family:Consolas,"D2Coding",monospace;font-size:.76rem;
+  color:#6f7994;word-break:break-all;
+}
+.row .btns{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+
+.btn{
+  appearance:none;font:inherit;font-size:.8rem;font-weight:700;cursor:pointer;
+  border:1px solid #3a4668;border-radius:8px;padding:7px 13px;
+  color:#c3cbe2;background:rgba(123,147,255,.08);white-space:nowrap;
+}
+.btn:hover{border-color:#5b76f7;color:#fff;background:rgba(91,118,247,.22)}
+.btn:focus-visible{outline:2px solid #7b93ff;outline-offset:2px}
+.btn.primary{border-color:#5b76f7;background:rgba(91,118,247,.28);color:#fff}
+.btn.done{border-color:#3f8f6a;background:rgba(79,190,139,.2);color:#9fe0c0}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+a.btn{text-decoration:none;display:inline-block}
+
+/* 전체 배포표 — 기수 × 프로그램 */
+.matrix{overflow-x:auto;margin-top:14px}
+.matrix table{width:100%;border-collapse:collapse;font-size:.82rem}
+.matrix th{
+  text-align:left;font-weight:700;color:#8b96b4;padding:8px 10px;
+  border-bottom:1.5px solid #3a4668;white-space:nowrap;font-size:.76rem;
+}
+.matrix th.p{text-align:center}
+.matrix td{padding:9px 10px;border-bottom:1px solid #222c47;color:#c3cbe2;white-space:nowrap}
+.matrix td.p{text-align:center;color:#3a4668}
+.matrix td.on{color:#7b93ff;font-weight:700}
+.matrix tr:hover td{background:rgba(123,147,255,.05)}
+.matrix .none{color:#6f7994}
+
+.toast{
+  position:fixed;left:50%;bottom:28px;transform:translateX(-50%);
+  background:#1b2540;border:1px solid #3f8f6a;color:#9fe0c0;
+  padding:11px 22px;border-radius:10px;font-size:.86rem;font-weight:700;
+  box-shadow:0 14px 40px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .18s;
+}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+@media (max-width:760px){
+  .row{grid-template-columns:1fr}
+  .row .btns{justify-content:flex-start}
+}
+</style>
 </head>
 <body>
 <main>
-  <div class="brand"><span class="uv">UV</span><small>RAION PRODUCT HUB</small></div>
-  <p class="tag">RAION 프로그램은 이 한 페이지에서 받습니다.
-    듣고 계신 강의를 고르면 그 기수에 배포되는 프로그램만 보입니다.</p>
+  <div class="brand"><span class="uv">UV</span><small>RAION PRODUCT HUB · 운영진용</small></div>
+  <p class="tag">수강생에게 보낼 프로그램 링크를 기수별로 모아 둔 곳입니다.
+    기수를 고르고 <b>복사</b>해서 전달하세요.</p>
 
-  <p class="section">강의</p>
+  <p class="section">기수</p>
   <ul class="courses" id="courses"></ul>
 
-  <p class="section" id="listhead">프로그램</p>
-  <div class="blocks" id="blocks"></div>
+  <div class="picked">
+    <h2 id="pickname">—</h2>
+    <span class="count" id="pickcount"></span>
+    <span class="act">
+      <button class="btn primary" id="copyall" type="button">이 기수 안내문 통째로 복사</button>
+      <button class="btn" id="copylinks" type="button">링크만 복사</button>
+    </span>
+  </div>
+
+  <div class="rows" id="rows"></div>
   <p class="empty" id="empty" hidden></p>
 
-  <div class="soon">받으실 프로그램이 안 보이거나 로그인이 안 되면 담당자에게 알려 주세요.</div>
+  <p class="section" style="margin-top:48px">전체 배포표</p>
+  <p class="tag" style="margin-bottom:0;font-size:.86rem">어느 기수가 무엇을 받는지 한눈에 봅니다.
+    기수 이름을 누르면 위에서 그 기수가 열립니다.</p>
+  <div class="matrix" id="matrix"></div>
 
-  <footer>© RAION · <a href="https://github.com/raion-log">github.com/raion-log</a></footer>
+  <footer>© RAION · 이 페이지는 운영진용입니다 ·
+    <a href="https://github.com/raion-log">github.com/raion-log</a></footer>
 </main>
 
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <!-- 기수·프로그램 데이터는 embed.js 가 불러온다. 새 프로그램이 생기면
-     products/ 에 파일을 만들고 **embed.js 의 목록에만** 한 줄 더하면 된다.
-     수강생 페이지 같은 다른 사이트도 이 파일 한 줄로 같은 데이터를 쓴다. -->
+     products/ 에 파일을 만들고 embed.js 의 목록에만 한 줄 더하면 된다. -->
 <script src="embed.js"></script>
 <script>
 UV.ready.then(({ courses, items }) => {
-  const ALL = '전체';
-  const blocks = document.getElementById('blocks');
-  const bar = document.getElementById('courses');
-  const empty = document.getElementById('empty');
-
+  const $ = (id) => document.getElementById(id);
+  const rows = $('rows'), bar = $('courses'), empty = $('empty');
   const esc = (s) => String(s == null ? '' : s);
-  const 있으면 = (v, fn) => (v ? fn(v) : '');
 
-  // ── 사양 접이식. spec 이 없는 프로그램은 통째로 안 그린다.
-  const 사양 = (s) => {
-    if (!s) return '';
-    const rows = (s.rows || []).map(([항목, 최소, 권장, 결과, 아픔]) => `
-      <tr><td class="item">${esc(항목)}</td><td>${esc(최소)}</td>
-          <td class="rec">${esc(권장)}</td>
-          <td class="${아픔 ? 'hit' : ''}">${esc(결과)}</td></tr>`).join('');
-    const 목록 = (arr, 표) => (arr || []).map(([본, 밑]) => `
-      <li><i>${표}</i><div>${본}${밑 ? `<small>${밑}</small>` : ''}</div></li>`).join('');
-    const ways = (s.ways || []).map(([k, v]) =>
-      `<div class="way"><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join('');
-    return `
-      <details class="spec">
-        <summary>내 PC로 되나요 — 최소 · 권장 사양 보기</summary>
-        <div class="specbody">
-          ${있으면(s.head, (h) => `<p class="small">${h}</p>`)}
-          <div class="tablewrap">
-            <table>
-              <tr><th>항목</th><th>최소</th><th class="rec">권장</th><th>최소 사양이면</th></tr>
-              ${rows}
-            </table>
+  // 전달할 주소 — 랜딩이 있으면 랜딩, 없으면 설치파일, 그것도 없으면 버전 목록.
+  const 주소 = (p) => p.site || p.download || p.releases || '';
+  const 상태 = (p) => p.site ? '랜딩 있음' : p.download ? '설치파일 직링크' : '설치파일 없음 (준비 중)';
+  const 안됨 = (p) => !p.site && !p.download;
+  // 안내문에 넣을 가이드 링크 — notes 안의 <a href> 를 그대로 쓴다.
+  const 가이드 = (p) => {
+    const m = (p.notes || []).join(' ').match(/href="([^"]+)"/);
+    return m ? m[1] : '';
+  };
+
+  let 지금 = '';
+
+  const 알림 = (말) => {
+    const t = $('toast');
+    t.textContent = 말;
+    t.classList.add('show');
+    clearTimeout(알림._t);
+    알림._t = setTimeout(() => t.classList.remove('show'), 1600);
+  };
+
+  // ★file:// 나 옛 브라우저에서는 navigator.clipboard 가 없다. 그때도 되게 둔다.
+  const 복사 = async (글, 말) => {
+    try {
+      await navigator.clipboard.writeText(글);
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = 글;
+      ta.style.cssText = 'position:fixed;left:-9999px';
+      document.body.append(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch { /* 그래도 안 되면 알림만 */ }
+      ta.remove();
+    }
+    알림(말 || '복사했습니다');
+  };
+
+  // ★「전체」는 기수와 무관하게 우리 프로그램을 통째로 본다 — 운영진이
+  //   「지금 뭐가 다 있지」를 확인하는 자리다.
+  const ALL = '전체';
+  const 그기수 = (기수) =>
+    (기수 === ALL ? items : items.filter((p) => (p.courses || []).includes(기수)));
+
+  const 안내문 = (기수) => {
+    const 줄 = [기수 === ALL ? '[전체 프로그램]' : `[${기수}] 프로그램 안내`, ''];
+    그기수(기수).forEach((p) => {
+      const 이름 = p.name + (p.edition ? ` (${p.edition})` : '');
+      줄.push(`■ ${이름}${p.version ? ' v' + p.version : ''}`
+        + (p.kind === 'ext' ? ' — 크롬 확장' : ''));
+      줄.push(`   ${주소(p)}`);
+      const g = 가이드(p);
+      if (g) 줄.push(`   설치 가이드: ${g}`);
+      줄.push('');
+    });
+    return 줄.join('\n').trim();
+  };
+
+  const 그리기 = (기수) => {
+    지금 = 기수;
+    const 목록 = 그기수(기수);
+    $('pickname').textContent = 기수 === ALL ? '전체 프로그램' : 기수;
+    $('pickcount').textContent = 목록.length
+      ? (기수 === ALL ? `${목록.length}개` : `프로그램 ${목록.length}개`) : '';
+    $('copyall').disabled = !목록.length;
+    $('copylinks').disabled = !목록.length;
+    empty.hidden = !!목록.length;
+    empty.textContent = `「${기수}」에 배포되는 프로그램이 아직 없습니다.`;
+
+    rows.innerHTML = '';
+    목록.forEach((p) => {
+      const el = document.createElement('div');
+      el.className = 'row';
+      const g = 가이드(p);
+      el.innerHTML = `
+        <div>
+          <div class="name">${esc(p.name)}
+            ${p.edition ? `<span class="ed">${esc(p.edition)}</span>` : ''}</div>
+          <div class="sub">
+            ${p.version ? `<span>v${esc(p.version)}</span>` : ''}
+            <span>${p.kind === 'ext' ? '크롬 확장' : p.kind === 'win' ? 'Windows 앱' : ''}</span>
+            <span class="${안됨(p) ? 'warn' : ''}">${상태(p)}</span>
+            ${p.published ? `<span>${esc(p.published)}</span>` : ''}
           </div>
-          ${있으면(s.note, (n) => `<p class="small" style="margin-top:14px">${n}</p>`)}
-          <div class="split">
-            <div class="col yes"><h4>그대로 됩니다</h4><ul>${목록(s.yes, '✓')}</ul></div>
-            <div class="col no"><h4>안 됩니다</h4><ul>${목록(s.no, '✕')}</ul></div>
+          <div class="sub" style="margin-top:2px">
+            <span>${(p.courses || []).length
+              ? esc((p.courses || []).join(' · ')) : '배포 기수 미정'}</span>
           </div>
-          ${ways ? `<div class="gate">
-            <h4>자막 없는 영상을 쓰려면 — 둘 중 하나만 있으면 됩니다</h4>
-            <div class="ways">${ways}</div></div>` : ''}
-          ${있으면(s.tail, (t) => `<p class="small" style="margin-top:18px">${t}</p>`)}
+          <div class="link">${esc(주소(p))}</div>
         </div>
-      </details>`;
-  };
-
-  // 크롬 확장은 설치가 앱과 다르다 — 압축을 풀고 개발자 모드로 얹는다.
-  const 확장설치 = () => `
-    <details class="spec">
-      <summary>크롬에 얹는 법 — 처음 한 번만</summary>
-      <div class="specbody">
-        <ol class="steps">
-          <li>받은 <b>zip 파일의 압축을 풉니다.</b> 푼 폴더는 지우지 마세요 —
-            크롬이 그 폴더를 계속 읽습니다.</li>
-          <li>크롬 주소창에 <b>chrome://extensions</b> 를 입력합니다.</li>
-          <li>오른쪽 위 <b>개발자 모드</b>를 켭니다.</li>
-          <li>왼쪽 위 <b>「압축해제된 확장 프로그램을 로드합니다」</b>를 누르고
-            방금 푼 폴더를 고릅니다.</li>
-        </ol>
-        <p class="small" style="margin-top:14px">새 판이 나오면 같은 자리에 다시 풀고
-          <b>chrome://extensions 에서 새로고침</b>을 누르면 됩니다.</p>
-      </div>
-    </details>`;
-
-  const 카드 = (p) => {
-    const 기수 = (p.courses || []).length
-      ? (p.courses || []).map((c) => `<li class="course">${esc(c)}</li>`).join('')
-      : '<li class="wait">배포 기수 미정</li>';
-    const 배지 = (p.badges || []).map((b) => `<li>${esc(b)}</li>`).join('');
-    const 판 = p.version ? `<li>${esc(p.version)}</li>` : '';
-    const 종류 = p.kind === 'ext' ? '<li class="kind">크롬 확장</li>'
-      : p.kind === 'win' ? '<li class="kind">Windows 앱</li>' : '';
-    const 받는말 = p.kind === 'ext' ? '확장프로그램 내려받기' : '설치기 다운로드';
-    const 받기 = p.download
-      ? `<a class="dl" href="${esc(p.download)}">${esc(p.version)} ${받는말}</a>`
-        + (p.releases ? `<a class="alt" href="${esc(p.releases)}">전체 버전 목록</a>` : '')
-      : (p.releases ? `<a class="dl" href="${esc(p.releases)}">전체 버전 목록에서 받기</a>` : '');
-    const 자산 = p.file ? `
-      <div class="specmeta">
-        <div><span class="k">파일</span><code>${esc(p.file)}</code></div>
-        ${있으면(p.size, (v) => `<div><span class="k">크기</span><span>${esc(v)}</span></div>`)}
-        ${있으면(p.published, (v) => `<div><span class="k">게시일</span><span>${esc(v)}</span></div>`)}
-        ${있으면(p.sha256, (v) => `<div><span class="k">SHA-256</span><code>${esc(v)}</code></div>`)}
-      </div>` : '';
-    const 안내 = (p.notes || []).length
-      ? `<p class="fine">${(p.notes || []).join('<br>')}</p>` : '';
-
-    // ★랜딩페이지(site)가 있으면 카드 전체가 그리로 가는 링크가 된다.
-    //   허브는 「프로그램 랜딩페이지들의 목록」이라 자세한 것은 그 랜딩이 맡는다.
-    //   랜딩이 아직 없는 프로그램만 여기서 바로 받게 둔다 — 랜딩이 생기면
-    //   products/*.js 에 site 한 줄을 적는 것만으로 링크 카드로 바뀐다.
-    const 링크카드 = !!p.site;
-    const el = document.createElement(링크카드 ? 'a' : 'div');
-    el.className = 'card block' + (링크카드 || p.download ? '' : ' pending');
-    if (링크카드) el.href = p.site;
-    // ★JSON 으로 담는다. 그냥 이어 붙이면 「유유스 1기」와 「유벤져스 1기」가 한 덩어리가 된다.
-    el.dataset.courses = JSON.stringify(p.courses || []);
-    el.innerHTML = `
-      ${링크카드 ? '<span class="go" aria-hidden="true">→</span>' : ''}
-      <h2>${esc(p.name)}${p.edition ? `<span class="edition">${esc(p.edition)}</span>` : ''}</h2>
-      <p class="en">${esc(p.en)}</p>
-      <p>${esc(p.desc)}</p>
-      <ul class="meta">${기수}${종류}${판}${배지}</ul>
-      ${링크카드 ? '' : `${받기}${자산}${안내}`
-        + `${p.kind === 'ext' ? 확장설치() : ''}${사양(p.spec)}`}`;
-    return el;
-  };
-
-  items.forEach((p) => blocks.append(카드(p)));
-
-  // ── 기수 고르기 ─────────────────────────────────
-  const cards = [...blocks.children];
-  const show = (pick) => {
-    let seen = 0;
-    cards.forEach((c, i) => {
-      const 것 = JSON.parse(c.dataset.courses || '[]');
-      const on = pick === ALL || 것.includes(pick);
-      c.hidden = !on;
-      if (on) seen += 1;
+        <div class="btns">
+          <button class="btn primary" data-copy="${esc(주소(p))}">링크 복사</button>
+          ${g ? `<button class="btn" data-copy="${esc(g)}" data-what="가이드 링크">가이드</button>` : ''}
+          <a class="btn" href="${esc(주소(p))}" target="_blank" rel="noopener">열기</a>
+        </div>`;
+      rows.append(el);
     });
-    empty.hidden = seen > 0;
-    empty.textContent = pick === ALL
-      ? '아직 올라온 프로그램이 없습니다.'
-      : `「${pick}」에 배포되는 프로그램이 아직 없습니다.`;
+
     bar.querySelectorAll('button').forEach((b) => {
-      b.setAttribute('aria-pressed', String(b.dataset.name === pick));
+      b.setAttribute('aria-pressed', String(b.dataset.name === 기수));
     });
-    try { localStorage.setItem('uv-course', pick); } catch { /* 사생활 보호 창이면 넘어간다 */ }
+    try { localStorage.setItem('uv-course', 기수); } catch { /* 사생활 보호 창이면 넘어간다 */ }
   };
 
+  // 링크 복사 (행 안의 단추는 위임으로 받는다)
+  rows.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-copy]');
+    if (!b) return;
+    복사(b.dataset.copy, (b.dataset.what || '링크') + ' 복사했습니다');
+    b.classList.add('done');
+    setTimeout(() => b.classList.remove('done'), 1200);
+  });
+
+  $('copyall').addEventListener('click', () => 복사(안내문(지금), '안내문을 복사했습니다'));
+  $('copylinks').addEventListener('click',
+    () => 복사(그기수(지금).map((p) => 주소(p)).join('\n'), '링크를 복사했습니다'));
+
+  // ── 기수 단추
   [ALL, ...courses].forEach((name) => {
     const li = document.createElement('li');
     const btn = document.createElement('button');
@@ -166,22 +249,46 @@ UV.ready.then(({ courses, items }) => {
     btn.textContent = name;
     btn.dataset.name = name;
     btn.setAttribute('aria-pressed', 'false');
-    btn.addEventListener('click', () => show(name));
+    btn.addEventListener('click', () => 그리기(name));
     li.append(btn);
     bar.append(li);
   });
 
+  // ── 전체 배포표
+  const m = document.createElement('table');
+  const 머리 = items.map((p) =>
+    `<th class="p">${esc(p.name.replace('RAION ', '').replace(' 자동배치', ''))}`
+    + `${p.edition ? `<br><span style="font-weight:400;opacity:.7">${esc(p.edition.split(' · ')[0])}</span>` : ''}</th>`
+  ).join('');
+  m.innerHTML = `<tr><th>기수</th>${머리}<th class="p">개수</th></tr>`
+    + courses.map((c) => {
+        const 칸 = items.map((p) =>
+          (p.courses || []).includes(c)
+            ? '<td class="p on">●</td>' : '<td class="p">·</td>').join('');
+        const n = 그기수(c).length;
+        return `<tr><td><button class="btn" data-go="${esc(c)}"`
+          + ` style="padding:3px 10px;font-size:.78rem">${esc(c)}</button></td>`
+          + `${칸}<td class="p ${n ? '' : 'none'}">${n || '—'}</td></tr>`;
+      }).join('');
+  $('matrix').append(m);
+  m.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-go]');
+    if (!b) return;
+    그리기(b.dataset.go);
+    document.querySelector('.picked').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  // 지난번에 보던 기수를 기억한다. 없으면 맨 끝(가장 최근).
   let 처음 = ALL;
   try {
     const saved = localStorage.getItem('uv-course');
     if (saved && (saved === ALL || courses.includes(saved))) 처음 = saved;
   } catch { /* 못 읽으면 전체 */ }
-  show(처음);
+  그리기(처음);
 }).catch((e) => {
-  // 데이터를 못 불러오면 빈 화면 대신 이유를 말한다.
   document.getElementById('empty').hidden = false;
   document.getElementById('empty').textContent =
-    '프로그램 목록을 불러오지 못했습니다. 새로고침해 보시고, 그래도 안 되면 담당자에게 알려 주세요.';
+    '프로그램 목록을 불러오지 못했습니다. 새로고침해 보세요.';
   console.error(e);
 });
 </script>
