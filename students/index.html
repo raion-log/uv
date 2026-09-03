@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RAION 수강생 페이지</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d1526'/%3E%3Ctext x='16' y='22' font-family='Georgia' font-size='14' font-weight='bold' fill='%237b93ff' text-anchor='middle'%3EUV%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../uv.css">
+<style>
+  /* 수강생 페이지에만 쓰는 것. 공통은 ../uv.css 를 그대로 쓴다. */
+  .who{
+    display:flex;flex-wrap:wrap;align-items:center;gap:14px;
+    border:1px solid #26314f;border-radius:14px;padding:16px 20px;
+    background:linear-gradient(180deg,rgba(21,29,50,.92),rgba(15,21,38,.92));margin-bottom:34px;
+  }
+  .who .label{color:#8b96b4;font-size:.84rem}
+  .who .pick{font-weight:700;color:#fff}
+  .who .right{margin-left:auto;display:flex;gap:10px;align-items:center}
+  .ghost{
+    appearance:none;font:inherit;font-size:.84rem;cursor:not-allowed;
+    border:1px dashed #3a4668;border-radius:999px;padding:7px 16px;
+    color:#6f7994;background:transparent;
+  }
+  .slot{
+    border:1px dashed #2b3757;border-radius:16px;padding:24px 26px;
+    background:rgba(13,21,38,.5);color:#8b96b4;
+  }
+  .slot h3{margin:0 0 6px;font-size:1rem;color:#c3cbe2;font-family:"Nanum Myeongjo",serif}
+  .slot p{margin:0;font-size:.88rem;line-height:1.7}
+  .slot .todo{
+    margin-top:12px;padding-top:12px;border-top:1px solid #222c47;
+    font-size:.8rem;color:#6f7994;
+  }
+  .rows{display:grid;gap:14px}
+</style>
+</head>
+<body>
+<main>
+  <div class="brand"><span class="uv">UV</span><small>RAION 수강생 페이지</small></div>
+  <p class="tag">듣고 계신 강의의 프로그램과 자료를 한자리에서 봅니다.</p>
+
+  <!-- ★로그인 자리 (껍데기)
+       지금은 기수를 직접 고른다. 로그인이 붙으면 그 사람의 기수가 자동으로 잡히고
+       아래 「기수 고르기」는 사라져야 한다. 로그인·권한 체계는 이미 있다
+       (raion-admin · 앱의 가입 후 관리자 승인). 여기 붙이는 일은 아직 안 했다. -->
+  <div class="who">
+    <span class="label">내 강의</span>
+    <span class="pick" id="pick">고르는 중…</span>
+    <div class="right">
+      <button class="ghost" type="button" disabled title="로그인이 붙으면 자동으로 잡힙니다">로그인 (준비 중)</button>
+    </div>
+  </div>
+
+  <p class="section">강의 고르기</p>
+  <ul class="courses" id="courses"></ul>
+
+  <p class="section">내 프로그램</p>
+  <div class="blocks" id="blocks"></div>
+  <p class="empty" id="empty" hidden></p>
+
+  <p class="section" style="margin-top:44px">강의 자료</p>
+  <div class="rows">
+    <!-- ★강의 자료 자리 (껍데기) -->
+    <div class="slot">
+      <h3>강의 자료</h3>
+      <p>회차별 자료·다시보기 링크가 여기 들어갑니다.</p>
+      <p class="todo">채울 것 — 자료 목록의 정본을 어디에 둘지 정하고(프로그램처럼
+        기수별 파일로 나누는 편이 안전합니다), 이 자리에서 읽어 그립니다.</p>
+    </div>
+
+    <!-- ★공지 자리 (껍데기) -->
+    <div class="slot">
+      <h3>공지</h3>
+      <p>기수별 공지가 여기 들어갑니다.</p>
+      <p class="todo">채울 것 — 공지 한 건은 「제목 · 날짜 · 본문 · 대상 기수」면 충분합니다.
+        대상 기수를 적어 두면 지금 고른 기수의 공지만 보이게 할 수 있습니다.</p>
+    </div>
+
+    <!-- ★문의 자리 (껍데기) -->
+    <div class="slot">
+      <h3>문의</h3>
+      <p>막히는 것이 있을 때 연락할 곳이 여기 들어갑니다.</p>
+      <p class="todo">채울 것 — 오픈채팅·이메일 중 실제로 쓰는 창구 하나를 적습니다.</p>
+    </div>
+  </div>
+
+  <footer>© RAION · <a href="https://github.com/raion-log">github.com/raion-log</a></footer>
+</main>
+
+<!-- 프로그램 데이터는 허브와 같은 것을 쓴다. 두 벌로 적지 않는다.
+     다른 사이트에 옮길 때는 이 줄을 절대 주소로 바꾸면 된다:
+     <script src="https://raion-log.github.io/uv/embed.js"></script> -->
+<script src="../embed.js"></script>
+<script>
+UV.ready.then(({ courses, items }) => {
+  const blocks = document.getElementById('blocks');
+  const bar = document.getElementById('courses');
+  const empty = document.getElementById('empty');
+  const pick = document.getElementById('pick');
+
+  const esc = (s) => String(s == null ? '' : s);
+
+  // ★수강생 페이지는 「내 것」만 본다. 그래서 허브와 달리 「전체」가 없다 —
+  //   자기 기수가 아닌 프로그램을 받아 가는 일을 애초에 막는다.
+  const 카드 = (p) => {
+    const el = document.createElement('div');
+    el.className = 'card block' + (p.download ? '' : ' pending');
+    el.dataset.courses = JSON.stringify(p.courses || []);
+    const 종류 = p.kind === 'ext' ? '<li class="kind">크롬 확장</li>'
+      : p.kind === 'win' ? '<li class="kind">Windows 앱</li>' : '';
+    const 받는말 = p.kind === 'ext' ? '확장프로그램 내려받기' : '설치기 다운로드';
+    const 받기 = p.download
+      ? `<a class="dl" href="${esc(p.download)}">${esc(p.version)} ${받는말}</a>`
+      : (p.releases ? `<a class="dl" href="${esc(p.releases)}">전체 버전 목록에서 받기</a>` : '');
+    el.innerHTML = `
+      <h2>${esc(p.name)}${p.edition ? `<span class="edition">${esc(p.edition)}</span>` : ''}</h2>
+      <p class="en">${esc(p.en)}</p>
+      <p>${esc(p.desc)}</p>
+      <ul class="meta">${종류}${p.version ? `<li>${esc(p.version)}</li>` : ''}</ul>
+      ${받기}
+      <p class="fine">자세한 사양·설치 안내는
+        <a class="alt" href="../">UV 제품 허브</a>에서 볼 수 있습니다.</p>`;
+    return el;
+  };
+
+  items.forEach((p) => blocks.append(카드(p)));
+  const cards = [...blocks.children];
+
+  const show = (기수) => {
+    let seen = 0;
+    cards.forEach((c) => {
+      const 것 = JSON.parse(c.dataset.courses || '[]');
+      const on = 것.includes(기수);
+      c.hidden = !on;
+      if (on) seen += 1;
+    });
+    empty.hidden = seen > 0;
+    empty.textContent = `「${기수}」에 배포되는 프로그램이 아직 없습니다.`;
+    pick.textContent = 기수;
+    bar.querySelectorAll('button').forEach((b) => {
+      b.setAttribute('aria-pressed', String(b.dataset.name === 기수));
+    });
+    try { localStorage.setItem('uv-course', 기수); } catch { /* 사생활 보호 창이면 넘어간다 */ }
+  };
+
+  courses.forEach((name) => {
+    const li = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = name;
+    btn.dataset.name = name;
+    btn.setAttribute('aria-pressed', 'false');
+    btn.addEventListener('click', () => show(name));
+    li.append(btn);
+    bar.append(li);
+  });
+
+  // 지난번에 고른 기수를 기억한다. 없으면 맨 끝(가장 최근 기수)을 보여 준다.
+  let 처음 = courses[courses.length - 1] || '';
+  try {
+    const saved = localStorage.getItem('uv-course');
+    if (saved && courses.includes(saved)) 처음 = saved;
+  } catch { /* 못 읽으면 기본값 */ }
+  if (처음) show(처음);
+}).catch((e) => {
+  document.getElementById('empty').hidden = false;
+  document.getElementById('empty').textContent =
+    '프로그램 목록을 불러오지 못했습니다. 새로고침해 보시고, 그래도 안 되면 담당자에게 알려 주세요.';
+  console.error(e);
+});
+</script>
+</body>
+</html>
