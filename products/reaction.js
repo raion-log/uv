@@ -18,12 +18,12 @@ UV.add({
   //   프로그램마다 다른 기기에서 따로 갱신해도 부딪히지 않게.
   site: 'https://raion-log.github.io/uv-global-reaction-editor-releases/',
 
-  version: '1.2.6-rc.12',
-  file: 'UV-Global-Reaction-Editor_1.2.6-rc.12_x64-setup.exe',
-  size: '639MB (670,062,364 바이트)',
+  version: '1.2.7',
+  file: 'UV-Global-Reaction-Editor_1.2.7_x64-setup.exe',
+  size: '639MB (670,089,198 바이트)',
   published: '2026-09-04',
-  sha256: '71fee858e9d69d1da5ea78a3e54e6cf8e5237a57efcfecee63675996e03d78eb',
-  download: 'https://github.com/raion-log/uv-global-reaction-editor-releases/releases/download/v1.2.6-rc.12/UV-Global-Reaction-Editor_1.2.6-rc.12_x64-setup.exe',
+  sha256: '9291cf307b3df26d150e5f47b61cb3988b4dc6fbe84636fc4d3ff15db232f1cd',
+  download: 'https://github.com/raion-log/uv-global-reaction-editor-releases/releases/download/v1.2.7/UV-Global-Reaction-Editor_1.2.7_x64-setup.exe',
   releases: 'https://github.com/raion-log/uv-global-reaction-editor-releases/releases',
 
   badges: ['로그인 필요', '품질 게이지 15종 자동 채점'],
