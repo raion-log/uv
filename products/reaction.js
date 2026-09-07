@@ -20,9 +20,9 @@ UV.add({
 
   version: '1.2.8',
   file: 'UV-Global-Reaction-Editor_1.2.8_x64-setup.exe',
-  size: '639MB (670,087,647 바이트)',
+  size: '639MB (670,100,598 바이트)',
   published: '2026-09-07',
-  sha256: 'adc22747a4df90c2366e8b5f0fd5c5518f02006d2763f2528c2cdb360e2b8edb',
+  sha256: '4bc3a80c91167e02518a4cd08a772d22069d4787b424979220ce3ec0323a1a1a',
   download: 'https://github.com/raion-log/uv-global-reaction-editor-releases/releases/download/v1.2.8/UV-Global-Reaction-Editor_1.2.8_x64-setup.exe',
   releases: 'https://github.com/raion-log/uv-global-reaction-editor-releases/releases',
 
