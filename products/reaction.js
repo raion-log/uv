@@ -18,18 +18,18 @@ UV.add({
   //   프로그램마다 다른 기기에서 따로 갱신해도 부딪히지 않게.
   site: 'https://raion-log.github.io/uv-global-reaction-editor-releases/',
 
-  version: '1.2.7-rc.3',
-  file: 'UV-Global-Reaction-Editor_1.2.7-rc.3_x64-setup.exe',
-  size: '639MB (670,098,692 바이트)',
-  published: '2026-09-05',
-  sha256: 'c5578793f2f1027bef90d5d5f4606367da43dc28a352560bd0d5045a24039f1f',
-  download: 'https://github.com/raion-log/uv-global-reaction-editor-releases/releases/download/v1.2.7-rc.3/UV-Global-Reaction-Editor_1.2.7-rc.3_x64-setup.exe',
+  version: '1.2.8',
+  file: 'UV-Global-Reaction-Editor_1.2.8_x64-setup.exe',
+  size: '639MB (670,087,647 바이트)',
+  published: '2026-09-07',
+  sha256: 'adc22747a4df90c2366e8b5f0fd5c5518f02006d2763f2528c2cdb360e2b8edb',
+  download: 'https://github.com/raion-log/uv-global-reaction-editor-releases/releases/download/v1.2.8/UV-Global-Reaction-Editor_1.2.8_x64-setup.exe',
   releases: 'https://github.com/raion-log/uv-global-reaction-editor-releases/releases',
 
   badges: ['로그인 필요', '품질 게이지 15종 자동 채점'],
   notes: [
     '이 판부터 <b>로그인이 필요합니다</b> — 가입 후 관리자 승인을 받아야 사용할 수 있습니다.',
-    '코드서명 전 내부 테스트 후보라 설치할 때 Windows 경고가 표시될 수 있습니다 — '
+    '아직 코드서명 전이라 설치할 때 Windows 경고가 표시될 수 있습니다 — '
       + '<b>추가 정보 → 실행</b>을 누르면 이어집니다.',
     '자동 업데이트가 아직 없습니다. 새 판이 나오면 설치기를 다시 받아 '
       + '<b>기존 설치 위에 그대로</b> 실행하세요. 설정과 작업물은 남습니다.',
