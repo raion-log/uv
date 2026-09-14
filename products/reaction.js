@@ -2,7 +2,8 @@
 //
 // ★이 파일 하나만 고치면 허브의 이 프로그램 칸이 바뀐다. 다른 프로그램 파일과
 //   섞이지 않으므로, 프로그램마다 다른 기기에서 따로 갱신해도 부딪히지 않는다.
-// ★판을 올릴 때 함께 고칠 것: version · file · size · published · sha256 · download
+// ★판 정보(version·file·size·sha256·download)는 더 이상 여기 두지 않는다 — 정본은 UV 포털 DB 이고 릴리스 절차의
+//   register-release 가 넣는다(2026-09-14). 이 카드는 포털 전용 링크만 준다.
 UV.add({
   id: 'reaction',
   name: 'UV 글로벌 반응 편집기',
@@ -16,14 +17,9 @@ UV.add({
   // ★이 프로그램의 랜딩페이지. 허브 카드를 누르면 여기로 간다.
   //   랜딩은 이 저장소(uv)가 아니라 **프로그램의 배포 저장소가 직접** 배포한다 —
   //   프로그램마다 다른 기기에서 따로 갱신해도 부딪히지 않게.
-  site: 'https://raion-log.github.io/uv-global-reaction-editor-releases/',
+  // ★수강생 링크 = 포털 전용 링크(로그인 뒤 그 프로그램만). 옛 랜딩은 설치 안내로만 남는다.
+  site: 'https://raion-log.github.io/uv-portal/?p=uv-global-reaction-editor',
 
-  version: '1.3.3 RC6',
-  file: 'UV-Global-Reaction-Editor_1.3.3_x64-setup.exe',
-  size: '639MB (670,338,555 바이트)',
-  published: '2026-09-13',
-  sha256: 'fe28374388f3f4acc5fbb23ac1f4e9263d4da6162b4faa5bd9a288681cf70ed0',
-  download: 'https://github.com/raion-log/uv-global-reaction-editor-releases/releases/download/v1.3.3-rc.6/UV-Global-Reaction-Editor_1.3.3_x64-setup.exe',
   releases: 'https://github.com/raion-log/uv-global-reaction-editor-releases/releases',
 
   badges: ['로그인 필요', '품질 게이지 15종 자동 채점'],
