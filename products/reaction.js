@@ -18,7 +18,7 @@ UV.add({
   //   랜딩은 이 저장소(uv)가 아니라 **프로그램의 배포 저장소가 직접** 배포한다 —
   //   프로그램마다 다른 기기에서 따로 갱신해도 부딪히지 않게.
   // ★수강생 링크 = 포털 전용 링크(로그인 뒤 그 프로그램만). 옛 랜딩은 설치 안내로만 남는다.
-  site: 'https://raion-log.github.io/uv-portal/?p=uv-global-reaction-editor',
+  site: 'https://uv-portal.uvengers-youtube-school.workers.dev/?p=uv-global-reaction-editor',
 
   releases: 'https://github.com/raion-log/uv-global-reaction-editor-releases/releases',
 
