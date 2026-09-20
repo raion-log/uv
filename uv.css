@@ -85,6 +85,8 @@ a.block.pending:hover{transform:none}
 .alt{margin-left:14px;color:#8b96b4;font-size:.85rem;text-decoration:none;border-bottom:1px dashed #3a4668}
 .alt:hover{color:#c3cbe2}
 .fine{margin-top:18px;color:#77809b;font-size:.8rem;line-height:1.8}
+/* 안내문 속 링크 — 기본 파랑은 이 배경에서 거의 안 보인다 */
+.fine a{color:#7b93ff}
 .fine code{
   font-family:Consolas,"D2Coding",monospace;font-size:.92em;color:#9fb0d8;
   background:rgba(255,255,255,.05);padding:1px 6px;border-radius:5px;word-break:break-all;
